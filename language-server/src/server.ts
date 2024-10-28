@@ -1,6 +1,7 @@
 'use strict';
 
 import {
+    StreamMessageReader, StreamMessageWriter,
     IPCMessageReader, IPCMessageWriter, createConnection, Connection, TextDocuments,
     Diagnostic, DiagnosticSeverity, InitializeResult, TextDocumentPositionParams, CompletionItem,
     CompletionItemKind, SignatureHelp, Hover, DocumentSymbolParams, SymbolInformation,
@@ -53,7 +54,7 @@ import {
 } from './unreal-buffers';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport
-let connection: Connection = createConnection(new IPCMessageReader(process), new IPCMessageWriter(process));
+let connection = createConnection( new StreamMessageReader(process.stdin), new StreamMessageWriter(process.stdout));
 
 // Create a connection to unreal
 let unreal : Socket;
